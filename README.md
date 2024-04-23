@@ -12,10 +12,10 @@ This section will break down the rules/guidelines specific to each command.
 
 
 1. Insert
-The format of the sql query for an insert statement is INSERT INTO TableName (Column1, Column2, ...) VALUES (Value1, Value2, ...);
-The program will first prompt you for the table and columns you wish to change. You should type these in the following format...
-    TableName (Column1, Column2, ...)
-    Ex: employees (id, name, department)
+The format of the sql query for an insert statement is INSERT INTO TableName (Column1, Column2, ...) VALUES (Value1, Value2, ...);__
+The program will first prompt you for the table and columns you wish to change. You should type these in the following format...__
+    TableName (Column1, Column2, ...)__
+    Ex: employees (id, name, department)__
 
 Then you will be prompted for the values you wish to add. These should be in the following format...
     (Value1, Value2, ...), (Value1, Value2, ...), ...
