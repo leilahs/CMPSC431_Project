@@ -1,0 +1,155 @@
+from pg import DB
+
+try:
+    db = DB(dbname='electricvehicles', host='localhost', user='postgres', passwd='pw')
+    failure = False
+except:
+    failure = True
+    print("Error connecting to database")
+
+if failure == True:
+    x = '0'
+else:
+    print("Choose type of query by typing the correlating number (ex: '1' for INSERT): \n\
+          1. Insert Data: Add new records to tables.\n\
+          2. Delete Data: Remove specific records from tables\n\
+          3. Update Data: Modify existing records in tables.\n\
+          4. Search Data: Find records based on specified criteria.\n\
+          5. Aggregate Functions: Implement calculations like sum, average, count, min, and max on data.\n\
+          6. Sorting: Arrange query results based on specified columns.\n\
+          7. Joins: Combine data from multiple tables using relationships.\n\
+          8. Grouping: Group query results based on specified columns.\n\
+          9. Subqueries: Nested operations within queries")
+    x = input()
+
+if x == '0':
+    print("")
+
+elif x == "1": #Insert
+    print("What table and columns do you want to insert into?")
+    table = input()
+    
+    print("What value(s) do you want to insert?")
+    values = input()
+
+    query = f"INSERT INTO {table} VALUES {values}"
+    print(db.query(query))
+
+elif x == '2': #Delete
+    print("What table do you want to delete from?")
+    table = input()
+    
+    print("What are the conditions for what should be deleted?")
+    condition = input()
+
+    query = f"DELETE FROM {table} WHERE {condition}"
+    print(db.query(query))
+
+elif x == '3': #Update
+    print("What table do you want to update?")
+    table = input()
+    
+    print("What column(s) do you want to update and to what value(s)?")
+    columns = input()
+
+    print("What are the conditions for what rows should be updated?")
+    condition = input()
+
+    query = f"UPDATE {table} SET {columns} WHERE {condition}"
+    print(db.query(query))
+
+elif x == '4': #Search
+    print("What column(s) do you want to select?")
+    columns = input()
+    
+    print("What table(s) do you want to select from?")
+    tables = input()
+
+    print("What are the conditions for what rows should be selected?")
+    condition = input()
+
+    query = f"SELECT {columns} FROM {tables} WHERE {condition}"
+    print(db.query(query))
+
+elif x == '5': #Aggregate Functions
+    print("What function do you want to use? Type one of the following options verbatim (ex: 'SUM')\n1.SUM\n2.AVG\n3.COUNT\n4.MIN\n5.MAX\n")
+    function = input()
+
+    print("What column do you want to select?")
+    column = input()
+    
+    print("What table do you want to select from?")
+    table = input()
+
+    print("What are the conditions for what rows should be selected?")
+    condition = input()
+
+    query = f"SELECT {function}({column}) FROM {table}"
+    print(db.query(query))
+
+elif x == '6': #Sorting
+    print("What column(s) do you want to select?")
+    column = input()
+    
+    print("What table do you want to select from?")
+    table = input()
+
+    print("What column do you want to sort by?")
+    orderBy = input()
+
+    print("Ascending or Descending? (ASC or DESC)")
+    orderDir = input()
+
+    query = f"SELECT {column} FROM {table} ORDER BY {orderBy} {orderDir}"
+    print(db.query(query))
+
+elif x == '7': #Joins
+    print("What column(s) do you want to select?")
+    column = input()
+    
+    print("What is the first table do you want to select from?")
+    table1 = input()
+
+    print("What is the second table you want to join with the first?")
+    table2 = input()
+
+    print("What key from table 1 do you want to use?")
+    key1 = input()
+
+    print("What key from table 2 do you want to use?")
+    key2 = input()
+
+    query = f"SELECT {column} FROM {table1} INNER JOIN {table2} ON {table1}.{key1} = {table2}.{key2}"
+    print(db.query(query))
+
+elif x == '8': #Grouping
+    print("What column do you want to select?")
+    column = input()
+    
+    print("What table do you want to select from?")
+    table = input()
+
+    print("What column from that table do you want to group by?")
+    groupBy = input()
+
+    query = f"SELECT {column}, COUNT(*) FROM {table} GROUP BY {groupBy}"
+    print(db.query(query))
+
+elif x == '9': #Subqueries
+    print("What column do you want to select?")
+    column = input()
+    
+    print("What table do you want to select from?")
+    table1 = input()
+
+    print("What column from that table do you want to use for comparison?")
+    compare1 = input()
+
+    print("What table do you want to look for a match in?")
+    table2 = input()
+
+    print("What column from that table do you want to use for comparison?")
+    compare2 = input()
+
+    query = f"SELECT {column} FROM {table1} WHERE {compare1} IN (SELECT {compare2} FROM {table2})"
+    print(db.query(query))
